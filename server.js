@@ -8,6 +8,23 @@ const Recipe = require('./models/Recipe');
 
 const User = require("./models/User");
 
+//bring in graph ql i express middleware
+
+const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
+
+const { makeExecutableSchema } = require('graphql-tools');
+
+const { typeDefs } = require('./schema');
+
+const { resolvers } = require('./resolvers');
+
+const schema = makeExecutableSchema({
+
+    typeDefs,
+
+    resolvers
+});
+
 // Connects to database
 
 mongoose
@@ -19,6 +36,18 @@ mongoose
  // Initialize application
 
 const app = express();
+
+// create graphiql app
+
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql'}))
+
+app.use('/graphql', graphqlExpress({
+    schema,
+    context: {
+       Recipe,
+       User
+    }
+}));
 
 const PORT = process.env.PORT || 4444;
 
