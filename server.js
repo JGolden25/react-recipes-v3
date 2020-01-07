@@ -39,9 +39,17 @@ const app = express();
 
 // create graphiql app
 
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql'}))
+app.use(
 
-app.use('/graphql', graphqlExpress({
+    '/graphiql', 
+    graphiqlExpress
+    ({ endpointURL: '/graphql'}
+    ))
+
+app.use(
+    '/graphql', 
+    bodyParser.json(),
+    graphqlExpress({
     schema,
     context: {
        Recipe,
