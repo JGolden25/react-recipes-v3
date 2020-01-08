@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+
 
 const createToken = (user, secret, expiresIn) => {
     const { username, email } = user;
