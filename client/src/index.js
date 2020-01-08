@@ -18,7 +18,7 @@ const client = new ApolloClient({
 const Root = () => (
     <Router>
         <Switch>
-            <Route path="/" exact component={App} />
+            <Route exact  path="/" component={App} />
             <Route path="/signin" component={Signin} />
             <Route path="/signup" component={Signup} />
             <Redirect to="/"/>
@@ -29,7 +29,7 @@ const Root = () => (
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <App />
+        <Root />
     </ApolloProvider>,
 
     document.getElementById("root")
