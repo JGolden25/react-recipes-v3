@@ -46,6 +46,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
+app.use(async (req, res, next) => {
+    const token = req.headers['authorization'];
+    console.log(token);
+    next();
+});
 // create graphiql app
 
 app.use(
