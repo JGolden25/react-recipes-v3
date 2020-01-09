@@ -48,15 +48,15 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(async (req, res, next) => {
-    const token = req.headers["authorization"];
-   if(token !== "null" ) {
-       try {
-        const currentUser = await jwt.verify(token, process.env.SECRET);
-        console.log(currentUser);
-       } catch (err) {
-        console.error(err);
-       }
-   }
+    const token = req.headers['authorization'];
+    if(token !== "null") {
+        try {
+            const currentUser = await jwt.verify(token, process.env.SECRET);
+            console.log(currentUser);
+        } catch (err) {
+            console.error(err)
+        }
+    }
     next();
 });
 // create graphiql app
