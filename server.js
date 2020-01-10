@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const jwt = require("jsonwebtoken");
 
-require('dotenv').config({ path: 'variables.env' });
+require("dotenv").config({ path: 'variables.env' });
 
 const Recipe = require('./models/Recipe');
 
@@ -37,26 +39,47 @@ mongoose
 
 const app = express();
 
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true
+
+};
+
+app.use(cors(corsOptions));
+
+app.use(async (req, res, next) => {
+    const token = req.headers["authorization"];
+    if (token !== "null") {
+      try {
+        const currentUser = await jwt.verify(token, process.env.SECRET);
+        req.currentUser = currentUser;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    next();
+  });
 // create graphiql app
 
 app.use(
 
-    '/graphiql', 
+    "/graphiql", 
     graphiqlExpress
-    ({ endpointURL: '/graphql'}
-    ))
+    ({ endpointURL: "/graphql"}
+    ));
 
-app.use(
-    '/graphql', 
-    bodyParser.json(),
-    graphqlExpress({
-    schema,
-    context: {
-       Recipe,
-       User
-    }
-}));
-
+    app.use(
+        "/graphql",
+        bodyParser.json(),
+        graphqlExpress(({ currentUser }) => ({
+          schema,
+          context: {
+            Recipe,
+            User,
+            currentUser
+          }
+        }))
+      );
 const PORT = process.env.PORT || 4444;
 
 app.listen(PORT, () => {
