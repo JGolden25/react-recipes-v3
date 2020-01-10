@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import Error from '../Error';
 import { SIGNUP_USER } from '../../queries';
+import { withRouter } from "react-router-dom";
 
 const initialState = {
     username: "",
@@ -32,12 +33,14 @@ handleChange = event => {
 
 handleSubmit = (event, signupUser) => {
     event.preventDefault();
-    signupUser().then(data => {
-        console.log(data);
-        localStorage.setItem('token', data.signupUser.token);
-        this.clearState();
+    signupUser().then(async ({ data }) => {
+      console.log(data);
+      localStorage.setItem("token", data.signupUser.token);
+      await this.props.refetch();
+      this.clearState();
+      this.props.history.push("/");
     });
-};
+  };
 
 validateForm = () => {
     const { username, email, password, passwordConfirmation } = this.state;
@@ -70,4 +73,4 @@ validateForm = () => {
     }
 }
 
-export default Signup;
+export default withRouter(Signup);
