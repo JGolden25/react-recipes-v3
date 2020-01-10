@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const AddRecipe = () => (
+
+class AddRecipe extends React.Component {
+    
+    render(){
+    return (
     
     <div className="App">
     <h2 className="App">Add Recipe</h2>
@@ -34,6 +38,7 @@ const AddRecipe = () => (
       </form>
             </div>
     
-);
+)}};
 
 export default AddRecipe;
+
