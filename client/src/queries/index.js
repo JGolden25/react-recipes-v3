@@ -79,6 +79,23 @@ export const ADD_RECIPE = gql`mutation($name: String!, $description: String!, $c
 }
 `;
 
+export const LIKE_RECIPE = gql`
+mutation($_id: ID!, $username: String!){
+  likeRecipe(_id: $_id, username: $username) {
+    _id
+    likes
+  }
+}
+`
+
+export const DELETE_USER_RECIPE = gql`
+  muation($_id: ID!) {
+    deleteUserRecipe(_id: $_id) {
+      _id
+    }
+  }
+`;
+
 /*User Queries*/
 
 export const GET_CURRENT_USER = gql`

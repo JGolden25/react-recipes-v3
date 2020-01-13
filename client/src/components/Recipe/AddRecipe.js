@@ -64,6 +64,9 @@ class AddRecipe extends React.Component {
         const { name, category, description, instructions, username } = this.state;
         return (
         <Mutation mutation={ADD_RECIPE} variables={{ name, category, description, instructions, username }}
+        refetchQueries={()=> [
+          { query: GET_USER_RECIPES, variables: { username } }
+        ]}
        
           update={this.updateCache}
         >
