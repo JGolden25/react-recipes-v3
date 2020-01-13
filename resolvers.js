@@ -16,6 +16,25 @@ exports.resolvers = {
             const recipe = await Recipe.findOne({ _id });
             return recipe;
           },
+          searchRecipes: async (root, { searchTerm }, { Recipe }) => {
+            if(searchTerm) {
+              const searchResults = await Recipe.find(
+                {
+                  $text: { $search: searchTerm }
+                },
+                {
+                  score: { $meta: "textScore" }
+                }
+              ).sort({
+                score: { $meta: "textScore" }
+              });
+              return searchResults;
+
+            } else {
+              const recipes = await Recipe.find().sort({ likes: 'desc', createdDate: 'desc'});
+              return recipes;
+            }
+          },
         getCurrentUser: async (root, args, { currentUser, User }) => {
             if(!currentUser) {
                 return null;

@@ -33,6 +33,9 @@ likes: {
 username: {
     type: String
 }
-})
+});
+RecipeSchema.index({
+'$**': 'text'
+});
 
 module.exports = mongoose.model('Recipe', RecipeSchema);
