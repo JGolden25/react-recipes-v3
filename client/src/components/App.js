@@ -38,22 +38,21 @@ class App extends React.Component {
     </h1>
     <Query query={GET_ALL_RECIPES}>
       {({ data, loading, error }) => {
-        if(loading) return <div>Loading</div>
-        if(error) return <div>Error</div>
-        console.log(data);
+        if(loading) return <Spinner/>;
+        if(error) return <div>Error</div>;
+        const { on } = this.state
       return (
-      <RecipeList className="cards">
+        <RecipeList pose={on ? "shown" : "hidden"} className="cards">
         {data.getAllRecipes.map(recipe => (
-        <RecipeItem key={recipe._id}{...recipe}/>
+          <RecipeItem key={recipe._id} {...recipe} />
         ))}
-        </RecipeList>
-        );
-      }}
-    </Query>
-  </div>
-)
-    }
-};
-    
+      </RecipeList>
+    );
+  }}
+</Query>
+</div>
+);
+}
+}
 
 export default App;
