@@ -50,33 +50,21 @@ query($searchTerm: String) {
 
 /*Recipes Mutations*/
 
-export const ADD_RECIPE = gql`mutation($name: String!, $description: String!, $category: String!, $instructions: String!, $username: String){
-  addRecipe(name: $name,
-    description: $description,
+export const ADD_RECIPE = gql`mutation($name: String!, $imageUrl: String!, $description: String!, $category: String!, $instructions: String!, $username: String){
+  addRecipe(name: $name
+    imageUrl: $imageUrl
+    description: $description
 
-    category: $category,
+    category: $category
 
-    instructions: $instructions,
+    instructions: $instructions
 
     username: $username
     ){
-      _id
-
-      name
-
-      category
-
-      description
-
-      instructions
-
-      createdDate
-
-      likes
-      
-      username
+      ...Complete Recipe
   }
 }
+${recipeFragments.recipe}
 `;
 
 export const LIKE_RECIPE = gql`
@@ -86,7 +74,16 @@ mutation($_id: ID!, $username: String!){
     likes
   }
 }
-`
+`;
+
+export const UNLIKE_RECIPE = gql`
+mutation($_id: ID!, $username: String!){
+  unlikeRecipe(_id: $_id, username: $username) {
+    _id
+    likes
+  }
+}
+`;
 
 export const DELETE_USER_RECIPE = gql`
   muation($_id: ID!) {
@@ -94,6 +91,26 @@ export const DELETE_USER_RECIPE = gql`
       _id
     }
   }
+`;
+
+export const UPDATE_USER_RECIPE = gql`
+mutation($_id: ID, $name: String!, $imageUrl: String!, $description: String!, $category: String!) {
+  updateUserRecipe(_id: $_id, name: $name, imageUrl: $imageUrl, description: $description, category: $category) {
+
+    _id
+
+    name
+
+    likes
+
+    category
+
+    imageUrl
+
+    description
+
+  }
+}
 `;
 
 /*User Queries*/
@@ -124,6 +141,13 @@ export const GET_USER_RECIPES = gql`
       name
 
       likes
+
+      imageUrl
+
+      category
+
+      description
+
     }
 
   }

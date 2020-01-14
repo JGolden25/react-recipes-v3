@@ -32,6 +32,10 @@ class AddRecipe extends React.Component {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     };
+    handleEditorChange = event => {
+      const newContent = event.editor.getData();
+      this.setState({ instructions: newContent });
+    };
 
     handleSubmit = (event, addRecipe) => {
         event.preventDefault();
