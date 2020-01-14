@@ -8,6 +8,8 @@ query {
     getAllRecipes{
         _id
 
+        imageUrl
+
         name
 
         category
