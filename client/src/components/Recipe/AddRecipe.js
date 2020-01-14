@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import CKEditor from "react-ckeditor-component";
 import { Mutation } from 'react-apollo';
-import { ADD_RECIPE, GET_ALL_RECIPES } from '../../queries';
+import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from '../../queries';
 import Error from '../Error';
 import withAuth from '../withAuth';
 

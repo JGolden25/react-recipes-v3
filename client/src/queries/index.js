@@ -1,4 +1,5 @@
 import { gql } from 'apollo-boost';
+import { recipeFragments } from "./fragments";
 
 /*Recipes Queries*/
 
