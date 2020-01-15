@@ -28,7 +28,7 @@ const schema = makeExecutableSchema({
     resolvers
 });
 
-// Connects to database
+// Connects to database adding this for commit
 
 mongoose
 
