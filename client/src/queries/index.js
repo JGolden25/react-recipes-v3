@@ -136,6 +136,7 @@ export const GET_USER_RECIPES = gql`
       imageUrl
       category
       description
+      instructions
     }
   }
 `;

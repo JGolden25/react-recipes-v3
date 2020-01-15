@@ -18,6 +18,7 @@ class UserRecipes extends React.Component {
     imageUrl: "",
     category: "",
     description: "",
+    instructions: "",
     modal: false
   };
 
@@ -193,10 +194,10 @@ const EditRecipeModal = ({
                 onChange={handleChange}
                 value={recipe.description}
               />
-              <label htmlFor="description">Recipe Instructions</label>
+              <label htmlFor="instructions">Recipe Instructions</label>
               <input
                 type="text"
-                name="description"
+                name="instructions"
                 onChange={handleChange}
                 value={recipe.instructions}
               />
