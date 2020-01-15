@@ -35,6 +35,12 @@ exports.resolvers = {
               return recipes;
             }
           },
+          getUserRecipes: async (root, { username }, { Recipe }) => {
+            const userRecipes = await Recipe.find({ username }).sort({
+              createdDate: 'desc'
+            });
+            return userRecipes;
+          },
         getCurrentUser: async (root, args, { currentUser, User }) => {
             if(!currentUser) {
                 return null;
@@ -63,6 +69,14 @@ exports.resolvers = {
             }).save();
             return newRecipe;
           },
+          updateUserRecipe: async (root, { _id, name, imageUrl, category, description }, { Recipe }) => {
+            const updatedRecipe = await Recipe.findOneAndUpdate(
+              { _id },
+              { $set: { name, imageUrl, category, description } },
+              { new: true }
+            );
+            return updatedRecipe;
+          },
         signinUser: async (root, { username, password }, { User }) => {
             const user = await User.findOne({ username });
             if(!user) {
@@ -75,7 +89,24 @@ exports.resolvers = {
             return { token: createToken(user, process.env.SECRET, "1hr")};
 
         },
-
+        likeRecipe: async (root, { _id, username }, { Recipe, User }) => {
+            const recipe = await Recipe.findOneAndUpdate({_id}, { $inc: { likes: 1 }});
+            const user = await User.findOneAndUpdate({ username }, { $addToSet: {
+              favorites: _id
+            }});
+            return recipe;
+        },
+        unlikeRecipe: async (root, { _id, username }, { Recipe, User }) => {
+          const recipe = await Recipe.findOneAndUpdate({_id}, { $inc: { likes: -1 }});
+          const user = await User.findOneAndUpdate({ username }, { $pull: {
+            favorites: _id
+          }});
+          return recipe;
+      },
+        deleteUserRecipe: async (root, { _id }, { Recipe }) => {
+          const recipe = await Recipe.findOneAndRemove({ _id });
+          return recipe;
+        },
 
         signupUser: async (root, { username, email, password }, { User }) => {
             const user = await User.findOne({ username });

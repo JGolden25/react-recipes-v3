@@ -34,7 +34,7 @@ handleChange = event => {
 handleSubmit = (event, signupUser) => {
     event.preventDefault();
     signupUser().then(async ({ data }) => {
-      console.log(data);
+    //   console.log(data);
       localStorage.setItem("token", data.signupUser.token);
       await this.props.refetch();
       this.clearState();
