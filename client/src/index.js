@@ -17,7 +17,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 const client = new ApolloClient({
-    uri: "http://localhost:4444/graphql",
+    uri: "http://recirvoir-apollo-gql.herokuapp.com/graphql",
     fetchOptions: {
         credentials: 'include'
     },
@@ -31,8 +31,7 @@ const client = new ApolloClient({
     },
     onError:({ networkError }) => {
         if(networkError) {
-            // console.log('Network Error', networkError);
-
+            localStorage.setItem("token", "");
         }
     }
 });
