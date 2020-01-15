@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require("path");
 const cors = require('cors');
 const jwt = require("jsonwebtoken");
 
@@ -10,7 +11,7 @@ const Recipe = require('./models/Recipe');
 
 const User = require("./models/User");
 
-//bring in graph ql i express middleware
+//bring in graph qli express middleware
 
 const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
 
@@ -27,7 +28,7 @@ const schema = makeExecutableSchema({
     resolvers
 });
 
-// Connects to database adding this for commit
+// Connects to database
 
 mongoose
 
@@ -39,13 +40,13 @@ mongoose
 
 const app = express();
 
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     credentials: true
 
-};
+// };
 
-app.use(cors(corsOptions));
+app.use(cors("*"));
 
 app.use(async (req, res, next) => {
     const token = req.headers["authorization"];
@@ -61,12 +62,12 @@ app.use(async (req, res, next) => {
   });
 // create graphiql app
 
-app.use(
+// app.use(
 
-    "/graphiql", 
-    graphiqlExpress
-    ({ endpointURL: "/graphql"}
-    ));
+//     "/graphiql", 
+//     graphiqlExpress
+//     ({ endpointURL: "/graphql"}
+//     ));
 
     app.use(
         "/graphql",
@@ -80,9 +81,19 @@ app.use(
           }
         }))
       );
+
+      if (process.env.NODE_ENV === "production") {
+        app.use(express.static("client/build"));
+      
+        app.get("*", (req, res) => {
+          res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+        });
+      }
+
 const PORT = process.env.PORT || 4444;
 
 app.listen(PORT, () => {
     console.log(`server listening on PORT ${PORT}`);
 });
 
+//heroku branch
