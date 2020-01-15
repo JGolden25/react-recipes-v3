@@ -8,6 +8,7 @@
   },
   "scripts": {
     "server": "nodemon server.js",
+    "build": "react-scripts build",
     "client": "cd client && npm start",
     "dev": "concurrently --names \"server,client\" \"npm run server --silent\" \"npm run client --silent\""
   },
