@@ -11,7 +11,7 @@ const Recipe = require('./models/Recipe');
 
 const User = require("./models/User");
 
-//bring in graph ql i express middleware
+//bring in graph qli express middleware
 
 const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
 
