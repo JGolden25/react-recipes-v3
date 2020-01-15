@@ -193,6 +193,13 @@ const EditRecipeModal = ({
                 onChange={handleChange}
                 value={recipe.description}
               />
+              <label htmlFor="description">Recipe Instructions</label>
+              <input
+                type="text"
+                name="description"
+                onChange={handleChange}
+                value={recipe.instructions}
+              />
 
               <hr />
               <div className="modal-buttons">
