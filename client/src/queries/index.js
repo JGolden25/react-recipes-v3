@@ -93,6 +93,7 @@ export const UPDATE_USER_RECIPE = gql`
     $imageUrl: String!
     $description: String!
     $category: String!
+    $instructions: String!
   ) {
     updateUserRecipe(
       _id: $_id
@@ -100,6 +101,7 @@ export const UPDATE_USER_RECIPE = gql`
       imageUrl: $imageUrl
       description: $description
       category: $category
+      instructions: $instructions
     ) {
       _id
       name
@@ -107,6 +109,7 @@ export const UPDATE_USER_RECIPE = gql`
       category
       imageUrl
       description
+      instructions
     }
   }
 `;

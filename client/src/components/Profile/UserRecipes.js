@@ -149,7 +149,8 @@ const EditRecipeModal = ({
       name: recipe.name,
       imageUrl: recipe.imageUrl,
       category: recipe.category,
-      description: recipe.description
+      description: recipe.description,
+      instructions: recipe.instructions
     }}
   >
     {updateUserRecipe => (
